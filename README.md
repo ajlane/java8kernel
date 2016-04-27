@@ -7,5 +7,5 @@ Based on the Java REPL from https://github.com/albertlatacz/java-repl
 - Install Orcale Java 8
 - Copy kernel files to ~/.local/share/jupyter/kernels/java
 - Download javarepl.jar
-- Update the environment variables in `kernel.json`
+- Update the paths and environment variables in `kernel.json`
 - Start Jupyter
