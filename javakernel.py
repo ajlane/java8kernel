@@ -1,4 +1,5 @@
 from IPython.kernel.zmq.kernelbase import Kernel
+import os
 import re
 import pexpect
 
@@ -9,7 +10,13 @@ class JavaKernel(Kernel):
     language = 'Java'
     language_version = '1.8'
 
-    repl = pexpect.spawn('java -jar /home/vagrant/javakernel/javarepl.jar')
+    java_exe = "{}/bin/java".format(os.environ.get("JAVA_HOME")) if "JAVA_HOME" in os.environ else "java"
+    java_repl = os.environ.get("JAVA_REPL", "javarepl.jar")
+    classpath = os.environ.get("CLASSPATH", "")
+    java_opts = os.environ.get("JAVA_OPTS", "")
+    
+
+    repl = pexpect.spawn('{} -cp "{}:{}" {} javarepl.Main'.format(java_exe, java_repl, classpath, java_opts))
     repl.expect('java>')
 
     banner=repl.before.decode('utf-8')

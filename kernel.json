@@ -1,4 +1,10 @@
 {
   "argv": [ "python3", "/home/vagrant/javakernel/javakernel.py", "-f", "{connection_file}" ],
-  "display_name": "Java 8"
+  "display_name": "Java 8",
+  "language": "java",
+  "env": {
+    "JAVA_REPL": "/home/vagrant/javakernel/javarepl.jar",
+    "CLASSPATH": "",
+    "JAVA_OPTS": ""
+  }
 }
