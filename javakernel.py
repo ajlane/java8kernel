@@ -1,4 +1,4 @@
-from IPython.kernel.zmq.kernelbase import Kernel
+from ipykernel.kernelbase import Kernel
 import os
 import re
 import pexpect
@@ -9,6 +9,9 @@ class JavaKernel(Kernel):
     implementation_version = '0.0.1'
     language = 'Java'
     language_version = '1.8'
+    language_info = {
+        'name': 'Java'
+    }
 
     java_exe = "{}/bin/java".format(os.environ.get("JAVA_HOME")) if "JAVA_HOME" in os.environ else "java"
     java_repl = os.environ.get("JAVA_REPL", "javarepl.jar")
@@ -26,7 +29,7 @@ class JavaKernel(Kernel):
         self.repl.expect('java>')
         response=self.repl.before.decode('utf-8')
         if not silent:
-            stream_content = {'name':'stdout', 'text': response.split('\n',1)[1]}
+            stream_content = {'output_type':'stream', 'name':'stdout', 'text': response.split('\n',1)[1]}
             self.send_response(self.iopub_socket, 'stream', stream_content)
             return {
                 'status': 'ok',
@@ -36,5 +39,5 @@ class JavaKernel(Kernel):
             }
 
 if __name__ == '__main__':
-    from IPython.kernel.zmq.kernelapp import IPKernelApp
+    from ipykernel.kernelapp import IPKernelApp
     IPKernelApp.launch_instance(kernel_class=JavaKernel)
